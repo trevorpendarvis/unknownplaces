@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "295502071261",
+    "firebase_url": "https://trevor-map2020-unknownplaces.firebaseio.com",
+    "project_id": "trevor-map2020-unknownplaces",
+    "storage_bucket": "trevor-map2020-unknownplaces.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295502071261:android:a8719502e08a13fb206234",
+        "android_client_info": {
+          "package_name": "edu.uco.tpendarvis.unknownplaces"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295502071261-5etf2295hu1mcg6ju3irj7arq693f2re.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3bwTr4UsOLeQsC6poi974k0oxPwV0-qQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "295502071261-5etf2295hu1mcg6ju3irj7arq693f2re.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
