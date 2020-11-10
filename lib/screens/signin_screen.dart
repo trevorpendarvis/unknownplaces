@@ -1,3 +1,6 @@
+import 'package:UnknownPlaces/controller/firebase_controller.dart';
+import 'package:UnknownPlaces/screens/view/mydialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -65,13 +68,22 @@ class Controller {
   String email;
   String password;
 
-  void signIn() {
+  void signIn() async {
     if (!state.formKey.currentState.validate()) {
       return;
     } else {
       state.formKey.currentState.save();
-      print("Email: $email");
-      print("Password: $password");
+
+      try {
+        FirebaseUser user = await FireBaseController.signIn(email, password);
+        print("USER: $user");
+      } catch (e) {
+        MyDialog.info(
+          context: state.context,
+          title: "Sign In Error",
+          content: e.message ?? e.toString(),
+        );
+      }
     }
   }
 
@@ -88,10 +100,10 @@ class Controller {
   }
 
   String validPassword(String value) {
-    if (value.length >= 4) {
+    if (value.length >= 6) {
       return null;
     } else {
-      return 'Min char 4';
+      return 'Min char 6';
     }
   }
 

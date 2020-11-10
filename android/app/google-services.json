@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "295502071261",
-    "firebase_url": "https://trevor-map2020-unknownplaces.firebaseio.com",
-    "project_id": "trevor-map2020-unknownplaces",
-    "storage_bucket": "trevor-map2020-unknownplaces.appspot.com"
+    "project_number": "1094174656463",
+    "firebase_url": "https://trevor-map2020-unknownpl-1f8d8.firebaseio.com",
+    "project_id": "trevor-map2020-unknownpl-1f8d8",
+    "storage_bucket": "trevor-map2020-unknownpl-1f8d8.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:295502071261:android:a8719502e08a13fb206234",
+        "mobilesdk_app_id": "1:1094174656463:android:bdf43fbe567f8a2672f4ba",
         "android_client_info": {
-          "package_name": "edu.uco.tpendarvis.unknownplaces"
+          "package_name": "edu.uco.tpendarvis.Map2020.UnknownPlaces"
         }
       },
       "oauth_client": [
         {
-          "client_id": "295502071261-5etf2295hu1mcg6ju3irj7arq693f2re.apps.googleusercontent.com",
+          "client_id": "1094174656463-rk486mp214u80irf1s0bn2go1vh3bs91.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD3bwTr4UsOLeQsC6poi974k0oxPwV0-qQ"
+          "current_key": "AIzaSyDk8u_FauTz0f5DxY_wemRmqwZbTSonwYY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "295502071261-5etf2295hu1mcg6ju3irj7arq693f2re.apps.googleusercontent.com",
+              "client_id": "1094174656463-rk486mp214u80irf1s0bn2go1vh3bs91.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
