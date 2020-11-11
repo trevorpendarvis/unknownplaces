@@ -1,5 +1,5 @@
 import 'package:UnknownPlaces/controller/request_controller.dart';
-import 'package:UnknownPlaces/screens/quicksearch_screen.dart';
+import 'package:UnknownPlaces/screens/display_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 class HomeState extends State<HomeScreen> {
   Controller con;
   FirebaseUser user;
+  String dropdownValue = 'Quick Search';
   @override
   void initState() {
     super.initState();
@@ -32,7 +33,28 @@ class HomeState extends State<HomeScreen> {
     user ??= ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home Screen"),
+        title: Center(
+          child: DropdownButton<String>(
+            isExpanded: true,
+            value: dropdownValue,
+            icon: Icon(Icons.arrow_downward),
+            iconSize: 24,
+            elevation: 16,
+            style: TextStyle(color: Colors.black),
+            underline: Container(
+              height: 2,
+              color: Colors.black,
+            ),
+            items: <String>['Food', 'Gas', 'Hotel', 'Groceries', 'Quick Search']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Center(child: Text(value)),
+              );
+            }).toList(),
+            onChanged: (value) => con.quickSearch(value),
+          ),
+        ),
       ),
       drawer: Drawer(
         child: ListView(
@@ -42,16 +64,16 @@ class HomeState extends State<HomeScreen> {
               accountEmail: Text(user.email),
             ),
             ListTile(
-              leading: Icon(Icons.search),
-              title: Text("Quick Search"),
-              onTap: con.quickSearch,
-            ),
-            ListTile(
               leading: Icon(Icons.exit_to_app),
               title: Text("Sign Out."),
               onTap: con.signOut,
             ),
           ],
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [],
         ),
       ),
     );
@@ -75,8 +97,14 @@ class Controller {
     Navigator.pushReplacementNamed(state.context, SignInScreen.routeName);
   }
 
-  void quickSearch() {
-    Navigator.pushNamed(state.context, QuickSearchScreen.routeName,
-        arguments: state.user);
+  void quickSearch(String newValue) async {
+    if (newValue == state.dropdownValue) {
+      return;
+    } else {
+      var results = await RequestController.test(newValue);
+      await Navigator.pushNamed(state.context, DisplayScreen.routeName,
+          arguments: {'user': state.user, 'results': results});
+      state.render(() {});
+    }
   }
 }

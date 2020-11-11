@@ -33,6 +33,21 @@ class SignInState extends State<SignInScreen> {
         key: formKey,
         child: Column(
           children: [
+            Stack(children: [
+              Image.asset('assets/images/logo2.jpg'),
+              Positioned(
+                top: 25.0,
+                left: 100.0,
+                child: Text(
+                  "Unknown Places",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 25.0,
+                    fontFamily: "Cinzel",
+                  ),
+                ),
+              ),
+            ]),
             TextFormField(
               decoration: InputDecoration(hintText: 'Email'),
               keyboardType: TextInputType.emailAddress,

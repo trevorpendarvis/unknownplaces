@@ -10,12 +10,12 @@ class RequestController {
   static const latitude = 35.650956;
   static const longitude = -97.453361;
 
-  static Future<void> test(String keyWord) async {
+  static Future<List<String>> test(String keyWord) async {
     var dio = Dio();
     var parameters = {
       'key': apikey,
       'location': '$latitude,$longitude',
-      'radius': '400',
+      'radius': '1609',
       'keyword': keyWord,
     };
 
@@ -23,6 +23,7 @@ class RequestController {
     var readable = response.data['results']
         .map<String>((results) => results['name'].toString())
         .toList();
-    print(readable);
+
+    return readable;
   }
 }
