@@ -10,7 +10,7 @@ class RequestController {
   static const latitude = 35.650956;
   static const longitude = -97.453361;
 
-  static Future<List<String>> test(String keyWord) async {
+  static Future<Map<String, dynamic>> test(String keyWord) async {
     var dio = Dio();
     var parameters = {
       'key': apikey,
@@ -20,9 +20,17 @@ class RequestController {
     };
 
     var response = await dio.get(url, queryParameters: parameters);
-    var readable = response.data['results']
+    var name = response.data['results']
         .map<String>((results) => results['name'].toString())
         .toList();
+    var vicinity = response.data['results']
+        .map<String>((results) => results['vicinity'].toString())
+        .toList();
+    var readable = {
+      'name': name,
+      'vicinity': vicinity,
+    };
+    print(name);
 
     return readable;
   }
