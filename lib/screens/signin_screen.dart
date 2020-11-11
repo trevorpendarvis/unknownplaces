@@ -1,4 +1,6 @@
 import 'package:UnknownPlaces/controller/firebase_controller.dart';
+import 'package:UnknownPlaces/controller/request_controller.dart';
+import 'package:UnknownPlaces/screens/home_screen.dart';
 import 'package:UnknownPlaces/screens/view/mydialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -73,11 +75,17 @@ class Controller {
       return;
     } else {
       state.formKey.currentState.save();
+      MyDialog.progessStart(state.context);
 
       try {
         FirebaseUser user = await FireBaseController.signIn(email, password);
         print("USER: $user");
+        MyDialog.progessEnd(state.context);
+        RequestController.test();
+        Navigator.pushReplacementNamed(state.context, HomeScreen.routeName,
+            arguments: user);
       } catch (e) {
+        MyDialog.progessEnd(state.context);
         MyDialog.info(
           context: state.context,
           title: "Sign In Error",
