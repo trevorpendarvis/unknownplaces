@@ -1,7 +1,12 @@
 import 'package:UnknownPlaces/controller/request_controller.dart';
+import 'package:UnknownPlaces/screens/quicksearch_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../controller/firebase_controller.dart';
+import 'signin_screen.dart';
+import 'view/mydialog.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/signInScreen/homeScreen';
@@ -14,8 +19,6 @@ class HomeScreen extends StatefulWidget {
 class HomeState extends State<HomeScreen> {
   Controller con;
   FirebaseUser user;
-  String joke;
-  var results;
   @override
   void initState() {
     super.initState();
@@ -31,7 +34,26 @@ class HomeState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text("Home Screen"),
       ),
-      body: Text("Joke: $joke"),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+              accountName: Text(user.displayName ?? 'N/A'),
+              accountEmail: Text(user.email),
+            ),
+            ListTile(
+              leading: Icon(Icons.search),
+              title: Text("Quick Search"),
+              onTap: con.quickSearch,
+            ),
+            ListTile(
+              leading: Icon(Icons.exit_to_app),
+              title: Text("Sign Out."),
+              onTap: con.signOut,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -39,4 +61,22 @@ class HomeState extends State<HomeScreen> {
 class Controller {
   HomeState state;
   Controller(this.state);
+
+  void signOut() async {
+    try {
+      await FireBaseController.signOut();
+    } catch (e) {
+      MyDialog.info(
+        context: state.context,
+        title: 'Sign Out error',
+        content: e.message ?? e.toString(),
+      );
+    }
+    Navigator.pushReplacementNamed(state.context, SignInScreen.routeName);
+  }
+
+  void quickSearch() {
+    Navigator.pushNamed(state.context, QuickSearchScreen.routeName,
+        arguments: state.user);
+  }
 }

@@ -9,8 +9,8 @@ class RequestController {
       'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
   static const latitude = 35.650956;
   static const longitude = -97.453361;
-  static const keyWord = 'food';
-  static Future<void> test() async {
+
+  static Future<void> test(String keyWord) async {
     var dio = Dio();
     var parameters = {
       'key': apikey,

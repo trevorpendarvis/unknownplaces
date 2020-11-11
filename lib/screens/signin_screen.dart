@@ -81,7 +81,7 @@ class Controller {
         FirebaseUser user = await FireBaseController.signIn(email, password);
         print("USER: $user");
         MyDialog.progessEnd(state.context);
-        RequestController.test();
+
         Navigator.pushReplacementNamed(state.context, HomeScreen.routeName,
             arguments: user);
       } catch (e) {

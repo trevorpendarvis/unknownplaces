@@ -1,4 +1,5 @@
 import 'package:UnknownPlaces/screens/home_screen.dart';
+import 'package:UnknownPlaces/screens/quicksearch_screen.dart';
 import 'package:UnknownPlaces/screens/signin_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class UnknownPlacesApp extends StatelessWidget {
       routes: {
         SignInScreen.routeName: (context) => SignInScreen(),
         HomeScreen.routeName: (context) => HomeScreen(),
+        QuickSearchScreen.routeName: (context) => QuickSearchScreen(),
       },
     );
   }
