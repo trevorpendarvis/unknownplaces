@@ -29,50 +29,52 @@ class SignInState extends State<SignInScreen> {
       appBar: AppBar(
         title: Text("Sign In"),
       ),
-      body: Form(
-        key: formKey,
-        child: Column(
-          children: [
-            Stack(children: [
-              Image.asset('assets/images/logo2.jpg'),
-              Positioned(
-                top: 25.0,
-                left: 100.0,
-                child: Text(
-                  "Unknown Places",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 25.0,
-                    fontFamily: "Cinzel",
+      body: SingleChildScrollView(
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              Stack(children: [
+                Image.asset('assets/images/logo2.jpg'),
+                Positioned(
+                  top: 25.0,
+                  left: 100.0,
+                  child: Text(
+                    "Unknown Places",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25.0,
+                      fontFamily: "Cinzel",
+                    ),
                   ),
                 ),
+              ]),
+              TextFormField(
+                decoration: InputDecoration(hintText: 'Email'),
+                keyboardType: TextInputType.emailAddress,
+                autocorrect: false,
+                validator: con.validEmail,
+                onSaved: con.onSavedEmail,
               ),
-            ]),
-            TextFormField(
-              decoration: InputDecoration(hintText: 'Email'),
-              keyboardType: TextInputType.emailAddress,
-              autocorrect: false,
-              validator: con.validEmail,
-              onSaved: con.onSavedEmail,
-            ),
-            TextFormField(
-              decoration: InputDecoration(hintText: 'Password'),
-              autocorrect: false,
-              obscureText: true,
-              validator: con.validPassword,
-              onSaved: con.onSavedPassword,
-            ),
-            RaisedButton(
-              child: Text(
-                "Log In",
-                style: TextStyle(
-                  color: Colors.white,
+              TextFormField(
+                decoration: InputDecoration(hintText: 'Password'),
+                autocorrect: false,
+                obscureText: true,
+                validator: con.validPassword,
+                onSaved: con.onSavedPassword,
+              ),
+              RaisedButton(
+                child: Text(
+                  "Log In",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
+                onPressed: con.signIn,
+                color: Colors.blue,
               ),
-              onPressed: con.signIn,
-              color: Colors.blue,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
