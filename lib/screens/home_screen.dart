@@ -1,5 +1,6 @@
 import 'package:UnknownPlaces/controller/request_controller.dart';
 import 'package:UnknownPlaces/screens/display_screen.dart';
+import 'package:UnknownPlaces/screens/settings_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,11 @@ class HomeState extends State<HomeScreen> {
               accountEmail: Text(user.email),
             ),
             ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Edit Profile'),
+              onTap: con.settings,
+            ),
+            ListTile(
               leading: Icon(Icons.exit_to_app),
               title: Text("Sign Out."),
               onTap: con.signOut,
@@ -101,10 +107,21 @@ class Controller {
     if (newValue == state.dropdownValue) {
       return;
     } else {
+      MyDialog.progessStart(state.context);
       var results = await RequestController.test(newValue);
+      MyDialog.progessEnd(state.context);
       await Navigator.pushNamed(state.context, DisplayScreen.routeName,
           arguments: {'user': state.user, 'results': results});
+
       state.render(() {});
     }
+  }
+
+  void settings() async {
+    await Navigator.pushNamed(state.context, SettingsScreen.routeName,
+        arguments: state.user);
+    await state.user.reload();
+    state.user = await FirebaseAuth.instance.currentUser();
+    Navigator.pop(state.context);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:UnknownPlaces/controller/firebase_controller.dart';
 import 'package:UnknownPlaces/controller/request_controller.dart';
 import 'package:UnknownPlaces/screens/home_screen.dart';
+import 'package:UnknownPlaces/screens/signup_screen.dart';
 import 'package:UnknownPlaces/screens/view/mydialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -73,6 +74,10 @@ class SignInState extends State<SignInScreen> {
                 onPressed: con.signIn,
                 color: Colors.blue,
               ),
+              RaisedButton(
+                child: Text("Click here to create a account."),
+                onPressed: con.createAccount,
+              ),
             ],
           ),
         ),
@@ -134,5 +139,9 @@ class Controller {
 
   void onSavedPassword(String value) {
     this.password = value;
+  }
+
+  void createAccount() {
+    Navigator.pushNamed(state.context, SignUpScreen.routeName);
   }
 }

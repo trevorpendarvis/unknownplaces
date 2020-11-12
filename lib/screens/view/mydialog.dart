@@ -28,4 +28,21 @@ class MyDialog {
           );
         });
   }
+
+  static Future<void> newAccount(BuildContext context) async {
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Account Created"),
+            content: Text("Successfully"),
+            actions: [
+              FlatButton(
+                child: Text("OK"),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          );
+        });
+  }
 }
