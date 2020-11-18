@@ -96,8 +96,9 @@ class Controller {
     this.userName = value;
   }
 
-  void changeEmail() {
-    Navigator.pushNamed(state.context, ChangeUserInfoScreen.routeName,
+  void changeEmail() async {
+    await Navigator.pushNamed(state.context, ChangeUserInfoScreen.routeName,
         arguments: state.user);
+    Navigator.pop(state.context);
   }
 }

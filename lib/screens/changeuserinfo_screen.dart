@@ -68,8 +68,9 @@ class Controller {
 
       try {
         await state.user.updateEmail(this.email);
-        await FireBaseController.signOut();
-        Navigator.pushReplacementNamed(state.context, SignInScreen.routeName);
+        //await FireBaseController.signOut();
+        //Navigator.pushReplacementNamed(state.context, SignInScreen.routeName);
+        Navigator.pop(state.context);
       } catch (e) {
         MyDialog.info(
           context: state.context,
