@@ -5,6 +5,7 @@ import 'package:UnknownPlaces/screens/settings_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../controller/firebase_controller.dart';
 import 'signin_screen.dart';
@@ -85,7 +86,22 @@ class HomeState extends State<HomeScreen> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [],
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(
+                    35.650852,
+                    -97.455753,
+                  ),
+                  zoom: 16.0,
+                ),
+                zoomGesturesEnabled: true,
+              ),
+            ),
+          ],
         ),
       ),
     );
