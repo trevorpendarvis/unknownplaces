@@ -45,4 +45,29 @@ class MyDialog {
           );
         });
   }
+
+  static Future<void> infoSearch(
+      {BuildContext context, String title, Map content, int index}) async {
+    String name = content['name'][index];
+    String address = content['address'][index];
+    String ratings = content['ratings'][index];
+    String open = content['open'][index];
+    String message =
+        "Name ${name}\n Address: ${address}\n Rating: ${ratings}\n Open: ${open}";
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Text('$message'),
+            actions: [
+              FlatButton(
+                child: Text("OK"),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          );
+        });
+  }
 }

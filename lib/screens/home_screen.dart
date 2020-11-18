@@ -1,5 +1,6 @@
 import 'package:UnknownPlaces/controller/request_controller.dart';
 import 'package:UnknownPlaces/screens/display_screen.dart';
+import 'package:UnknownPlaces/screens/search_screen.dart';
 import 'package:UnknownPlaces/screens/settings_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -70,6 +71,11 @@ class HomeState extends State<HomeScreen> {
               onTap: con.settings,
             ),
             ListTile(
+              leading: Icon(Icons.search),
+              title: Text("Search"),
+              onTap: con.search,
+            ),
+            ListTile(
               leading: Icon(Icons.exit_to_app),
               title: Text("Sign Out."),
               onTap: con.signOut,
@@ -122,6 +128,12 @@ class Controller {
         arguments: state.user);
     await state.user.reload();
     state.user = await FirebaseAuth.instance.currentUser();
+    Navigator.pop(state.context);
+  }
+
+  void search() async {
+    await Navigator.pushNamed(state.context, SearchScreen.routeName,
+        arguments: state.user);
     Navigator.pop(state.context);
   }
 }
