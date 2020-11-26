@@ -1,6 +1,7 @@
 import 'package:UnknownPlaces/screens/changeuserinfo_screen.dart';
 import 'package:UnknownPlaces/screens/home_screen.dart';
 import 'package:UnknownPlaces/screens/display_screen.dart';
+import 'package:UnknownPlaces/screens/mapfind_screen.dart';
 import 'package:UnknownPlaces/screens/search_screen.dart';
 import 'package:UnknownPlaces/screens/settings_screen.dart';
 import 'package:UnknownPlaces/screens/signin_screen.dart';
@@ -25,6 +26,7 @@ class UnknownPlacesApp extends StatelessWidget {
         ChangeUserInfoScreen.routeName: (context) => ChangeUserInfoScreen(),
         SignUpScreen.routeName: (context) => SignUpScreen(),
         SearchScreen.routeName: (context) => SearchScreen(),
+        MapFindScreen.routeName: (context) => MapFindScreen(),
       },
     );
   }

@@ -1,4 +1,4 @@
-import 'package:UnknownPlaces/controller/request_controller.dart';
+//import 'package:UnknownPlaces/controller/request_controller.dart';
 import 'package:UnknownPlaces/screens/view/mydialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -81,11 +81,11 @@ class Controller {
       MyDialog.progessStart(state.context);
       state.formKey.currentState.save();
       try {
-        state.results = await RequestController.search(this.searchItem);
-        state.name = state.results['name'];
-        state.address = state.results['address'];
-        state.open = state.results['open'];
-        state.ratings = state.results['ratings'];
+        // state.results = await RequestController.search(this.searchItem);
+        // state.name = state.results['name'];
+        // state.address = state.results['address'];
+        // state.open = state.results['open'];
+        // state.ratings = state.results['ratings'];
         MyDialog.progessEnd(state.context);
       } catch (e) {
         MyDialog.progessEnd(state.context);
