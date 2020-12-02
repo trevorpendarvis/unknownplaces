@@ -6,6 +6,7 @@ class UnknownPlaces {
   String vicinity;
   Geometry geometry;
   int userRatings;
+  String placeId;
 
   UnknownPlaces({
     this.name,
@@ -13,6 +14,7 @@ class UnknownPlaces {
     this.vicinity,
     this.geometry,
     this.userRatings,
+    this.placeId,
   });
 
   UnknownPlaces.fromJson(Map<dynamic, dynamic> parsedJson)
@@ -24,5 +26,7 @@ class UnknownPlaces {
         geometry = Geometry.fromJson(parsedJson['geometry']),
         userRatings = (parsedJson['user_ratings_total'] != null)
             ? parsedJson['user_ratings_total'].toInt()
-            : null;
+            : null,
+        placeId =
+            (parsedJson['place_id'] != null) ? parsedJson['place_id'] : null;
 }

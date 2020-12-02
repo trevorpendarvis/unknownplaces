@@ -13,6 +13,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../controller/firebase_controller.dart';
 import 'signin_screen.dart';
+import 'signin_screen.dart';
 import 'view/mydialog.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -238,10 +239,7 @@ class Controller {
 
   void debug() async {
     RequestController requestController = RequestController();
-    state.results = await requestController.getPlaces("food");
-    for (var item in state.results) {
-      print("Name: ${item.name}");
-    }
+    requestController.debug();
   }
 
   String validSearch(String value) {
