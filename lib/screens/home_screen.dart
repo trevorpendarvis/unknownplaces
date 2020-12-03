@@ -2,6 +2,7 @@ import 'package:UnknownPlaces/controller/geolocator_controller.dart';
 import 'package:UnknownPlaces/model/unknownPlaces.dart';
 import 'package:UnknownPlaces/controller/request_controller.dart';
 import 'package:UnknownPlaces/screens/display_screen.dart';
+import 'package:UnknownPlaces/screens/favorite_screen.dart';
 import 'package:UnknownPlaces/screens/mapfind_screen.dart';
 import 'package:UnknownPlaces/screens/search_screen.dart';
 import 'package:UnknownPlaces/screens/settings_screen.dart';
@@ -99,9 +100,9 @@ class HomeState extends State<HomeScreen> {
               onTap: con.signOut,
             ),
             ListTile(
-              leading: Icon(Icons.bug_report),
-              title: Text('Debug'),
-              onTap: con.debug,
+              leading: Icon(Icons.favorite),
+              title: Text('Favorites'),
+              onTap: con.favorite,
             ),
           ],
         ),
@@ -237,9 +238,24 @@ class Controller {
     state.render(() {});
   }
 
-  void debug() async {
-    RequestController requestController = RequestController();
-    requestController.debug();
+  void favorite() async {
+    try {
+      var fav = null;
+      //var fav = await FireBaseController.getfav(state.user.email);
+      //print(fav);
+      await Navigator.pushNamed(state.context, FavoriteScreen.routeName,
+          arguments: fav);
+      
+      Navigator.pop(state.context);
+    } catch (e) {
+      MyDialog.info(
+        context: state.context,
+        title: "favorite error",
+        content: e.toString(),
+      );
+    }
+
+    Navigator.pushNamed(state.context, FavoriteScreen.routeName);
   }
 
   String validSearch(String value) {

@@ -52,6 +52,15 @@ class UnknownPlaces {
     };
   }
 
+  static UnknownPlaces deserialize(Map<String, dynamic> data) {
+    return UnknownPlaces(
+      name: data[UnknownPlaces.NAME],
+      vicinity: data[UnknownPlaces.VICINITY],
+      imageUrl: data[UnknownPlaces.IMAGE_URL],
+      rating: data[UnknownPlaces.RATING],
+    );
+  }
+
   UnknownPlaces.fromJson(Map<dynamic, dynamic> parsedJson)
       : name = parsedJson['name'],
         rating = (parsedJson['rating'] != null)

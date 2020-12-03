@@ -34,13 +34,7 @@ class DisplayState extends State<DisplayScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("${results.name}"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.star),
-            onPressed: con.fav,
-          ),
-        ],
-      ),
+       ),
       body: ListView(
         children: [
           Column(
@@ -91,16 +85,5 @@ class Controller {
   DisplayState state;
   Controller(this.state);
 
-  void fav() async {
-    var u = UnknownPlaces(
-      name: state.results.name,
-      createdBy: state.user.email,
-      imageUrl: state.image,
-      rating: state.results.rating,
-      vicinity: state.results.vicinity,
-      timestamp: DateTime.now(),
-    );
-
-    await FireBaseController.addFav(u);
-  }
+  
 }

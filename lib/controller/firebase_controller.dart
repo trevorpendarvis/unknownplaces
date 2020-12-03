@@ -37,4 +37,21 @@ class FireBaseController {
         .collection(UnknownPlaces.COLLECTION)
         .add(places.serialize());
   }
+
+  static Future<List<UnknownPlaces>> getfav(String email) async {
+    QuerySnapshot querySnapshot = await Firestore.instance
+        .collection(UnknownPlaces.COLLECTION)
+        .where(UnknownPlaces.CREATED_BY, arrayContains: email)
+        .getDocuments();
+
+    var favs = <UnknownPlaces>[];
+
+    if (querySnapshot != null && querySnapshot.documents.length != 0) {
+      for (var doc in querySnapshot.documents) {
+        favs.add(UnknownPlaces.deserialize(doc.data));
+      }
+    }
+
+    return favs;
+  }
 }
