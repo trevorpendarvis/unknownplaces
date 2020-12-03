@@ -34,7 +34,7 @@ class DisplayState extends State<DisplayScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("${results.name}"),
-       ),
+      ),
       body: ListView(
         children: [
           Column(
@@ -73,6 +73,10 @@ class DisplayState extends State<DisplayScreen> {
                     "Lat: ${results.geometry.location.lat.toString()} Lng: ${results.geometry.location.lng.toString()} ",
                     style: TextStyle(fontSize: 30.0)),
               ),
+              RaisedButton(
+                child: Text("View On Map"),
+                onPressed: con.mapFind,
+              ),
             ],
           ),
         ],
@@ -85,5 +89,9 @@ class Controller {
   DisplayState state;
   Controller(this.state);
 
-  
+  void mapFind() {
+    
+
+
+  }
 }

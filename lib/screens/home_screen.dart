@@ -2,7 +2,6 @@ import 'package:UnknownPlaces/controller/geolocator_controller.dart';
 import 'package:UnknownPlaces/model/unknownPlaces.dart';
 import 'package:UnknownPlaces/controller/request_controller.dart';
 import 'package:UnknownPlaces/screens/display_screen.dart';
-import 'package:UnknownPlaces/screens/favorite_screen.dart';
 import 'package:UnknownPlaces/screens/mapfind_screen.dart';
 import 'package:UnknownPlaces/screens/search_screen.dart';
 import 'package:UnknownPlaces/screens/settings_screen.dart';
@@ -238,25 +237,7 @@ class Controller {
     state.render(() {});
   }
 
-  void favorite() async {
-    try {
-      var fav = null;
-      //var fav = await FireBaseController.getfav(state.user.email);
-      //print(fav);
-      await Navigator.pushNamed(state.context, FavoriteScreen.routeName,
-          arguments: fav);
-      
-      Navigator.pop(state.context);
-    } catch (e) {
-      MyDialog.info(
-        context: state.context,
-        title: "favorite error",
-        content: e.toString(),
-      );
-    }
-
-    Navigator.pushNamed(state.context, FavoriteScreen.routeName);
-  }
+  void favorite() async {}
 
   String validSearch(String value) {
     if (value != null) {
