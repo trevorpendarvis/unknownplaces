@@ -1,5 +1,6 @@
 import 'package:UnknownPlaces/controller/firebase_controller.dart';
 import 'package:UnknownPlaces/model/unknownplaces.dart';
+import 'package:UnknownPlaces/screens/mapfind_screen.dart';
 import 'package:UnknownPlaces/screens/view/mydialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -90,8 +91,9 @@ class Controller {
   Controller(this.state);
 
   void mapFind() {
-    
-
-
+    Navigator.pushNamed(state.context, MapFindScreen.routeName, arguments: {
+      "lat": state.results.geometry.location.lat,
+      'lng': state.results.geometry.location.lng,
+    });
   }
 }

@@ -89,75 +89,79 @@ class HomeState extends State<HomeScreen> {
               onTap: con.settings,
             ),
             ListTile(
-              leading: Icon(Icons.search),
-              title: Text("Search"),
-              onTap: con.search,
-            ),
-            ListTile(
               leading: Icon(Icons.exit_to_app),
               title: Text("Sign Out."),
               onTap: con.signOut,
             ),
-            ListTile(
-              leading: Icon(Icons.favorite),
-              title: Text('Favorites'),
-              onTap: con.favorite,
-            ),
           ],
         ),
       ),
-      body: (userLocation != null)
+      body: (results == null || results.length == 0)
           ? SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height / 3,
-                    width: MediaQuery.of(context).size.width,
-                    child: GoogleMap(
-                      initialCameraPosition: CameraPosition(
-                        target: LatLng(
-                          userLocation.latitude,
-                          userLocation.longitude,
-                        ),
-                        zoom: 16.0,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        decoration: InputDecoration(hintText: "Search"),
+                        autocorrect: true,
+                        validator: con.validSearch,
+                        onSaved: con.onSavedSearch,
                       ),
-                      zoomGesturesEnabled: true,
-                    ),
-                  ),
-                  (results == null)
-                      ? Form(
-                          key: formKey,
-                          child: Column(
-                            children: [
-                              TextFormField(
-                                decoration: InputDecoration(hintText: "Search"),
-                                autocorrect: true,
-                                validator: con.validSearch,
-                                onSaved: con.onSavedSearch,
+                      RaisedButton(
+                        child: Text("Search"),
+                        onPressed: con.save,
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+                        child: Stack(children: [
+                          Image.asset('assets/images/logo2.jpg'),
+                          Positioned(
+                            top: 25.0,
+                            left: 100.0,
+                            child: Text(
+                              "Unknown Places",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 25.0,
+                                fontFamily: "Cinzel",
                               ),
-                              RaisedButton(
-                                child: Text("Search"),
-                                onPressed: con.save,
-                              ),
-                            ],
+                            ),
                           ),
-                        )
-                      : ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemBuilder: con.getListItems,
-                          itemCount: results.length,
-                        ),
-                ],
+                        ]),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             )
-          : Center(
-              child: Column(
-                children: [
-                  CircularProgressIndicator(),
-                  Text("Loading.."),
-                ],
-              ),
+          : ListView.builder(
+              itemCount: results.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    Container(
+                      color: Colors.grey[300],
+                      child: ListTile(
+                        title: Text(
+                          "${results[index].name}",
+                          style: TextStyle(fontSize: 35.0),
+                        ),
+                        subtitle: Text(
+                          "${results[index].vicinity}",
+                          style: TextStyle(fontSize: 25.0),
+                        ),
+                        onTap: () => con.onTapTile(context, index),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                  ],
+                );
+              },
             ),
     );
   }
@@ -182,17 +186,24 @@ class Controller {
   }
 
   void quickSearch(String newValue) async {
-    // if (newValue == state.dropdownValue) {
-    //   return;
-    // } else {
-    //   MyDialog.progessStart(state.context);
-    //   var results = await RequestController.test(newValue);
-    //   MyDialog.progessEnd(state.context);
-    //   await Navigator.pushNamed(state.context, DisplayScreen.routeName,
-    //       arguments: {'user': state.user, 'results': results});
-
-    //   state.render(() {});
-    // }
+    if (newValue == state.dropdownValue) {
+      return;
+    } else {
+      try {
+        MyDialog.progessStart(state.context);
+        RequestController requestController = RequestController();
+        state.results = await requestController.getPlaces(newValue);
+        MyDialog.progessEnd(state.context);
+        state.render(() {});
+      } catch (e) {
+        MyDialog.progessEnd(state.context);
+        MyDialog.info(
+          context: state.context,
+          title: "Places search error",
+          content: e.toString(),
+        );
+      }
+    }
   }
 
   void settings() async {
@@ -220,6 +231,23 @@ class Controller {
         RequestController requestController = RequestController();
         state.results = await requestController.getPlaces(this.keyword);
         MyDialog.progessEnd(state.context);
+        if (state.results == null || state.results.length == 0) {
+          showDialog(
+              context: state.context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text("Search Error"),
+                  content: Text("Could not find what you were looking for"),
+                  actions: [
+                    FlatButton(
+                      child: Text("OK"),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
+                );
+              });
+        }
+
         state.render(() {});
       } catch (e) {
         MyDialog.progessEnd(state.context);

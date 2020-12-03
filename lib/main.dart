@@ -18,6 +18,8 @@ class UnknownPlacesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: SignInScreen.routeName,
+      color: Colors.black,
+      debugShowCheckedModeBanner: false,
       routes: {
         SignInScreen.routeName: (context) => SignInScreen(),
         HomeScreen.routeName: (context) => HomeScreen(),

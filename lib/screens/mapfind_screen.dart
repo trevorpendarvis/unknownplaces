@@ -35,7 +35,7 @@ class MapFindState extends State<MapFindScreen> {
                           lat,
                           lng,
                         ),
-                        zoom: 16.0,
+                        zoom: 18.0,
                       ),
                       zoomGesturesEnabled: true,
                     ),
