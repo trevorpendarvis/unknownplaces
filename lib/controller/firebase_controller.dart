@@ -1,3 +1,5 @@
+import 'package:UnknownPlaces/model/unknownplaces.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FireBaseController {
@@ -27,5 +29,12 @@ class FireBaseController {
       email: email,
       password: password,
     );
+  }
+
+  static Future<void> addFav(UnknownPlaces places) async {
+    places.timestamp = DateTime.now();
+    Firestore.instance
+        .collection(UnknownPlaces.COLLECTION)
+        .add(places.serialize());
   }
 }

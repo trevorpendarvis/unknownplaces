@@ -29,24 +29,42 @@ class RequestController {
   }
 
   void debug() async {
+    String search = 'https://maps.googleapis.com/maps/api/place/details/json?';
     var parameters = {
       'key': apikey,
-      'location': '$latitude,$longitude',
-      'radius': '1609',
-      'keyword': "Food",
+      'place_id': "ChIJi6C1MxquEmsR9-c-3O48ykI",
+      'fields': "name,formatted_phone_number,photos",
     };
-    var response = await dio.get(url, queryParameters: parameters);
+    var response = await dio.get(search, queryParameters: parameters);
 
     dio.close();
 
-    var json = response.data['results'];
+    var json = response.data['result']['photos'][0]['photo_reference'];
+    print(json);
+  }
 
-    var jsonResults = json as List;
-
-    jsonResults.map((place) => UnknownPlaces.fromJson(place)).toList();
-
-    for (var item in jsonResults) {
-      print(item.placeId);
+  Future<String> getPhotoRef(String ref) async {
+    String url = 'https://maps.googleapis.com/maps/api/place/details/json?';
+    var parameters = {
+      'key': apikey,
+      'place_id': ref,
+      'fields': "name,formatted_phone_number,photos",
+    };
+    var response = await dio.get(url, queryParameters: parameters);
+    var json;
+    dio.close();
+    try {
+      json = response.data['result']['photos'][0]['photo_reference'];
+    } catch (e) {
+      print(e.toString());
+      return null;
     }
+    return json;
+  }
+
+  String getImageUrl(String photoRef) {
+    String imageUrl =
+        'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoRef&key=$apikey';
+    return imageUrl;
   }
 }

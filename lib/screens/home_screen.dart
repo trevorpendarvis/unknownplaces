@@ -276,7 +276,21 @@ class Controller {
     );
   }
 
-  void onTapTile(BuildContext context, int index) {}
+  void onTapTile(BuildContext context, int index) async {
+    RequestController requestController = RequestController();
+    String ref =
+        await requestController.getPhotoRef(state.results[index].placeId);
+    String imageUrl = requestController.getImageUrl(ref);
+    Navigator.pushNamed(
+      state.context,
+      DisplayScreen.routeName,
+      arguments: {
+        'results': state.results[index],
+        'user': state.user,
+        'imageurl': imageUrl
+      },
+    );
+  }
 
   void onLongPressTile(BuildContext context, int index) async {
     double lat = state.results[index].geometry.location.lat;

@@ -1,3 +1,5 @@
+import 'package:UnknownPlaces/controller/firebase_controller.dart';
+import 'package:UnknownPlaces/model/unknownplaces.dart';
 import 'package:UnknownPlaces/screens/view/mydialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +14,9 @@ class DisplayScreen extends StatefulWidget {
 
 class DisplayState extends State<DisplayScreen> {
   Controller con;
-  Map resluts;
-  List renderName;
-  List renderLocation;
+  var results;
   FirebaseUser user;
+  String image;
   @override
   void initState() {
     super.initState();
@@ -28,16 +29,59 @@ class DisplayState extends State<DisplayScreen> {
   Widget build(BuildContext context) {
     Map args = ModalRoute.of(context).settings.arguments;
     user ??= args['user'];
-    resluts ??= args['results'];
-    renderName ??= resluts['name'];
-    renderLocation ??= resluts['vicinity'];
+    image ??= args['imageurl'];
+    results ??= args['results'];
     return Scaffold(
       appBar: AppBar(
-        title: Text("Quick Search"),
+        title: Text("${results.name}"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.star),
+            onPressed: con.fav,
+          ),
+        ],
       ),
-      body: ListView.builder(
-        itemBuilder: con.getListTile,
-        itemCount: renderName.length,
+      body: ListView(
+        children: [
+          Column(
+            children: [
+              (image != null)
+                  ? Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Image.network(image),
+                    )
+                  : Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Icon(Icons.broken_image),
+                    ),
+              ListTile(
+                leading: Icon(Icons.account_circle),
+                title: Text(
+                  results.name,
+                  style: TextStyle(fontSize: 30.0),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.location_on),
+                title: Text(
+                  results.vicinity,
+                  style: TextStyle(fontSize: 30.0),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.star_border),
+                title: Text(results.rating.toString(),
+                    style: TextStyle(fontSize: 30.0)),
+              ),
+              ListTile(
+                leading: Icon(Icons.vpn_lock),
+                title: Text(
+                    "Lat: ${results.geometry.location.lat.toString()} Lng: ${results.geometry.location.lng.toString()} ",
+                    style: TextStyle(fontSize: 30.0)),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -47,27 +91,16 @@ class Controller {
   DisplayState state;
   Controller(this.state);
 
-  Widget getListTile(BuildContext context, int index) {
-    return Container(
-      color: Colors.grey[700],
-      padding: EdgeInsets.all(10.0),
-      margin: EdgeInsets.all(10.0),
-      child: ListTile(
-        title: Text(
-          state.renderName[index],
-          style: TextStyle(color: Colors.white),
-        ),
-        subtitle: Text("", style: TextStyle(color: Colors.black)),
-        onTap: () => onTapTitle(context, index, state.renderLocation[index]),
-      ),
+  void fav() async {
+    var u = UnknownPlaces(
+      name: state.results.name,
+      createdBy: state.user.email,
+      imageUrl: state.image,
+      rating: state.results.rating,
+      vicinity: state.results.vicinity,
+      timestamp: DateTime.now(),
     );
-  }
 
-  void onTapTitle(BuildContext context, int index, String location) {
-    MyDialog.info(
-      context: context,
-      title: 'Location',
-      content: location,
-    );
+    await FireBaseController.addFav(u);
   }
 }
