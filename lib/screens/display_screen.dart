@@ -47,7 +47,11 @@ class DisplayState extends State<DisplayScreen> {
                     )
                   : Container(
                       width: MediaQuery.of(context).size.width,
-                      child: Icon(Icons.broken_image),
+                      height: MediaQuery.of(context).size.height / 4,
+                      child: Icon(
+                        Icons.broken_image,
+                        size: 75.0,
+                      ),
                     ),
               ListTile(
                 leading: Icon(Icons.account_circle),

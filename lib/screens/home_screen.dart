@@ -5,6 +5,7 @@ import 'package:UnknownPlaces/screens/display_screen.dart';
 import 'package:UnknownPlaces/screens/mapfind_screen.dart';
 import 'package:UnknownPlaces/screens/search_screen.dart';
 import 'package:UnknownPlaces/screens/settings_screen.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -303,9 +304,15 @@ class Controller {
 
   void onTapTile(BuildContext context, int index) async {
     RequestController requestController = RequestController();
+    String imageUrl;
     String ref =
         await requestController.getPhotoRef(state.results[index].placeId);
-    String imageUrl = requestController.getImageUrl(ref);
+    if (ref != null) {
+      imageUrl = requestController.getImageUrl(ref);
+    } else {
+      imageUrl = null;
+    }
+
     Navigator.pushNamed(
       state.context,
       DisplayScreen.routeName,

@@ -59,6 +59,7 @@ class RequestController {
       print(e.toString());
       return null;
     }
+
     return json;
   }
 
